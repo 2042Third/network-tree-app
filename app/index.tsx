@@ -76,8 +76,17 @@ export default function App() {
 
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.displayText}>State Picker Challenge</Text>
+
+    <View style={[styles.container] }>
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        width: '90%',
+        marginTop: 20,
+      }}>
+        {/*This should be sticking to the left*/}
+        <Text style={styles.displayText}>State Picker Challenge</Text>
+      </View>
       <Text style={styles.smallStatusText}>{serverStatus}</Text>
       <View style={modalVisible?styles.buttonContainerOpen:styles.buttonContainer}
       >
@@ -176,10 +185,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  header: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
+
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -217,9 +223,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainerOpen: {
-    backgroundColor: 'lightblue',
+    backgroundColor: 'rgba(232,243,251, 1)',
     // Have gray border
-    borderColor: 'blue',
+    borderColor: 'rgba(53,110,251, 1)',
     borderWidth: 2,
     height: 50,
     width: '90%',
@@ -238,7 +244,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   doneButton: {
-    color: 'blue',
+    color: 'rgba(53,110,251, 1)',
     fontSize: 18,
   },
 });
