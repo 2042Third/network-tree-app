@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, Modal, Button, TouchableOpacity} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import DropdownArrow from "@/app/arrow_down";
 
 
 export default function App() {
@@ -77,10 +78,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.displayText}>State Picker Challenge</Text>
-      <Text style={styles.displayText}>{serverStatus}</Text>
-      <View style={styles.buttonContainer}>
+      <Text style={styles.smallStatusText}>{serverStatus}</Text>
+      <View style={modalVisible?styles.buttonContainerOpen:styles.buttonContainer}
+      >
         <TouchableOpacity
-            // style={styles.button}
                           onPress={() => {
                             setModalVisible(true);
                             getAllStates();
@@ -94,6 +95,9 @@ export default function App() {
               {selectedState}
             </Text>
           ) : null}
+          {/*Drop-down Arrow Icon, and sticks to the right of the touch opacity*/}
+          <DropdownArrow />
+
         </TouchableOpacity>
       </View>
 
@@ -149,6 +153,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'gray',
   },
+  smallStatusText: {
+    fontSize: 12,
+    fontFamily: 'Arial',
+    color: 'gray',
+  },
   text: {
     fontSize: 18,
     marginTop: 0,
@@ -201,6 +210,17 @@ const styles = StyleSheet.create({
     // Have gray border
     borderColor: 'black',
     borderWidth: 1,
+    height: 50,
+    width: '90%',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+  },
+  buttonContainerOpen: {
+    backgroundColor: 'lightblue',
+    // Have gray border
+    borderColor: 'blue',
+    borderWidth: 2,
     height: 50,
     width: '90%',
     borderRadius: 10,
