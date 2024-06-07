@@ -7,10 +7,46 @@ export default function App() {
   const [selectedState, setSelectedState] = useState('Alabama');
   const [modalVisible, setModalVisible] = useState(false);
   const [stateLabel, setStateLabel] = useState('State');
+  const [serverStatus, setServerStatus] = useState('none');
+
+  // URL to post to
+  const URL = "http://localhost:3000/data";
+
+  const postSelected = async (data:string) => {
+    try {
+      const response = await fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          state: data,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Response:', data);
+        setServerStatus('Response:'+data.status);
+      } else {
+        console.log('Error:', response.status);
+        setServerStatus('Error:'+response.status);
+      }
+    } catch (error) {
+      console.log('Error:', error);
+      setServerStatus('Error:'+error);
+    }
+  };
+
+  const handleFinish = () => {
+    setModalVisible(false);
+    postSelected(selectedState);
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.displayText}>State Picker Challenge</Text>
+      <Text style={styles.displayText}>{serverStatus}</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
             // style={styles.button}
@@ -40,7 +76,7 @@ export default function App() {
 
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <TouchableOpacity onPress={() => handleFinish()}>
                 <Text style={styles.doneButton}>Done</Text>
               </TouchableOpacity>
             </View>
@@ -50,7 +86,6 @@ export default function App() {
                 style={{width: 250, height: 200}}
                 onValueChange={(itemValue, itemIndex) => {
                   setSelectedState(itemValue);
-                  // setModalVisible(false);
                 }}
               >
                 {/*All 50 states*/}
@@ -142,7 +177,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
   },
